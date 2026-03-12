@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Guess The Number</title>
+
+<style>
+
+body{
+font-family: Arial;
+text-align:center;
+background:#121212;
+color:white;
+margin-top:60px;
+}
+
+h1{
+font-size:40px;
+}
+
+input{
+padding:10px;
+font-size:16px;
+border-radius:5px;
+border:none;
+}
+
+button{
+padding:10px 20px;
+font-size:16px;
+border:none;
+border-radius:6px;
+background:#00c3ff;
+color:black;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+background:#00a0d1;
+}
+
+#gameSection{
+display:none;
+}
+
+table{
+margin:auto;
+margin-top:20px;
+border-collapse:collapse;
+}
+
+td,th{
+border:1px solid white;
+padding:8px 15px;
+}
+
+.creator{
+margin-top:80px;
+font-size:18px;
+line-height:1.8;
+color:#00ffcc;
+font-weight:bold;
+}
+
+.creator a{
+color:#ff4dff;
+text-decoration:none;
+}
+
+.creator a:hover{
+text-decoration:underline;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🎯 Guess The Number</h1>
+
+<div id="startScreen">
+
+<p>Enter your name to start</p>
+
+<input type="text" id="playerName" placeholder="Your Name">
+
+<br>
+
+<button onclick="startGame()">Start Game</button>
+
+</div>
+
+
+<div id="gameSection">
+
+<p>I picked a number between <b>1 and 100</b></p>
+
+<input type="number" id="guess">
+
+<br>
+
+<button onclick="checkGuess()">Guess</button>
+
+<button onclick="restartGame()">Play Again</button>
+
+<p id="result"></p>
+
+<p id="attempts"></p>
+
+</div>
+
+
+<h2>🏆 Leaderboard</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Player</th>
+<th>Guesses</th>
+</tr>
+</thead>
+
+<tbody id="leaderboard">
+</tbody>
+
+</table>
+
+
+
+<div class="creator">
+
+<marquee>⚡ THIS WEB HAS BEEN CREATED BY EREN ⚡</marquee>
+
+<br>
+
+INSTA :
+<a href="https://www.instagram.com/e.rehx?igsh=eDkzeXE5NmtoMGw4" target="_blank">
+FOLLOW ME HERE
+</a>
+
+</div>
+
+
+
+<script>
+
+let secretNumber;
+let attempts=0;
+let player="";
+
+
+function startGame(){
+
+player=document.getElementById("playerName").value;
+
+if(player===""){
+alert("Enter your name first");
+return;
+}
+
+secretNumber=Math.floor(Math.random()*100)+1;
+attempts=0;
+
+document.getElementById("startScreen").style.display="none";
+document.getElementById("gameSection").style.display="block";
+
+}
+
+
+function checkGuess(){
+
+let guess=Number(document.getElementById("guess").value);
+
+attempts++;
+
+document.getElementById("attempts").innerHTML=
+"Guesses: "+attempts;
+
+if(guess===secretNumber){
+
+document.getElementById("result").innerHTML=
+"🎉 Correct! You guessed in "+attempts+" tries.";
+
+saveScore(player,attempts);
+
+loadLeaderboard();
+
+}
+
+else if(guess>secretNumber){
+
+document.getElementById("result").innerHTML=
+"📉 Too High!";
+
+}
+
+else{
+
+document.getElementById("result").innerHTML=
+"📈 Too Low!";
+
+}
+
+}
+
+
+
+function restartGame(){
+
+secretNumber=Math.floor(Math.random()*100)+1;
+
+attempts=0;
+
+document.getElementById("result").innerHTML="";
+
+document.getElementById("attempts").innerHTML="";
+
+document.getElementById("guess").value="";
+
+}
+
+
+
+function saveScore(name,score){
+
+let scores=JSON.parse(localStorage.getItem("scores")) || [];
+
+scores.push({name:name,score:score});
+
+scores.sort((a,b)=>a.score-b.score);
+
+scores=scores.slice(0,10);
+
+localStorage.setItem("scores",JSON.stringify(scores));
+
+}
+
+
+
+function loadLeaderboard(){
+
+let scores=JSON.parse(localStorage.getItem("scores")) || [];
+
+let board=document.getElementById("leaderboard");
+
+board.innerHTML="";
+
+scores.forEach(function(s){
+
+board.innerHTML+="<tr><td>"+s.name+"</td><td>"+s.score+"</td></tr>";
+
+});
+
+}
+
+
+loadLeaderboard();
+
+</script>
+
+</body>
+  </html>
