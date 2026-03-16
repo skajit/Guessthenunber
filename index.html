@@ -260,5 +260,44 @@ loadLeaderboard();
 
 </script>
 
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AlzaSyBvi 3sjhor_oXG F G B S kvVNvYlw_LySIWNG",
+  authDomain: "guess-the-number-dff I a.firebaseapp.com",
+  projectId: "guess-the-number-dffla",
+  storageBucket: "guess-the-number-dff/a.firebasestorage.app",
+  messagingSenderId: "916063551568",
+  appId: "1:916063551568:web:0ca98 ce755693086411155"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function saveScore(player, guesses){
+
+await addDoc(collection(db,"leaderboard"),{
+name: player,
+score: guesses
+});
+
+}
+
+async function loadLeaderboard(){
+
+const q = query(collection(db,"leaderboard"), orderBy("score"), limit(10));
+const querySnapshot = await getDocs(q);
+
+querySnapshot.forEach((doc)=>{
+console.log(doc.data());
+});
+
+}
+
+</script>
+
 </body>
   </html>
