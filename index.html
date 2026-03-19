@@ -100,7 +100,8 @@ text-decoration:underline;
 
 <br>
 
-<button onclick="checkGuess()">Guess</button>
+<button id="guessBtn"
+  onclick="checkGuess()">Guess</button>
 
 <button onclick="restartGame()">Play Again</button>
 
@@ -190,10 +191,14 @@ document.getElementById("result").innerHTML=
 "🎉 Correct! You guessed in "+attempts+" tries.";
 
 gameEnded= true; 
-document.getElementById("guessInput").disabled = true;
-document.querySelector("button").disabled = true;
 saveScore(player,attempts);
 loadLeaderboard();
+  
+
+document.getElementById("guess").disabled = true;
+document.querySelector("guessBtn").disabled = true;
+
+document.getElementById("popup").style.display = "flex";
 
 }
 
