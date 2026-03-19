@@ -146,6 +146,8 @@ FOLLOW ME HERE
 
 <script>
 
+let gameEnded = false;
+let alreadySaved = false;  
 let secretNumber;
 let attempts=0;
 let player="";
@@ -183,8 +185,8 @@ if(guess===secretNumber){
 document.getElementById("result").innerHTML=
 "🎉 Correct! You guessed in "+attempts+" tries.";
 
+gameEnded= true; 
 saveScore(player,attempts);
-
 loadLeaderboard();
 
 }
@@ -209,6 +211,9 @@ document.getElementById("result").innerHTML=
 
 function restartGame(){
 
+gameEnded = false;
+alreadySaved = false;
+
 secretNumber=Math.floor(Math.random()*100)+1;
 
 attempts=0;
@@ -223,17 +228,23 @@ document.getElementById("guess").value="";
 
 
 
-function saveScore(name,score){
+async function saveScore(player, attempts){
 
-let scores=JSON.parse(localStorage.getItem("scores")) || [];
+  if(!gameEnded || alreadySaved){
+    console.log("Blocked fake score");
+    return;
+  }
 
-scores.push({name:name,score:score});
+  if(attempts < 1 || attempts > 20){
+    return;
+  }
 
-scores.sort((a,b)=>a.score-b.score);
+  alreadySaved = true;
 
-scores=scores.slice(0,10);
-
-localStorage.setItem("scores",JSON.stringify(scores));
+  await addDoc(collection(db,"leaderboard"),{
+    name: player,
+    score: attempts
+  });
 
 }
 
