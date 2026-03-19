@@ -173,6 +173,10 @@ document.getElementById("gameSection").style.display="block";
 
 function checkGuess(){
 
+if (gameEnded) {
+  return; // 🚫 stop everything if game is over
+  }
+  
 let guess=Number(document.getElementById("guess").value);
 
 attempts++;
@@ -186,6 +190,8 @@ document.getElementById("result").innerHTML=
 "🎉 Correct! You guessed in "+attempts+" tries.";
 
 gameEnded= true; 
+document.getElementById("guessInput").disabled = true;
+document.querySelector("button").disabled = true;
 saveScore(player,attempts);
 loadLeaderboard();
 
@@ -223,6 +229,8 @@ document.getElementById("result").innerHTML="";
 document.getElementById("attempts").innerHTML="";
 
 document.getElementById("guess").value="";
+document.getElementById("guessInput").disabled = false;
+document.getElementById("guessBtn").disabled = false;
 
 }
 
