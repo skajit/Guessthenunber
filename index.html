@@ -196,9 +196,7 @@ loadLeaderboard();
   
 
 document.getElementById("guess").disabled = true;
-document.querySelector("guessBtn").disabled = true;
-
-document.getElementById("popup").style.display = "flex";
+document.getElementById("guessBtn").disabled = true;
 
 }
 
@@ -234,50 +232,11 @@ document.getElementById("result").innerHTML="";
 document.getElementById("attempts").innerHTML="";
 
 document.getElementById("guess").value="";
-document.getElementById("guessInput").disabled = false;
+document.getElementById("guess").disabled = false;
 document.getElementById("guessBtn").disabled = false;
 
 }
 
-
-
-async function saveScore(player, attempts){
-
-  if(!gameEnded || alreadySaved){
-    console.log("Blocked fake score");
-    return;
-  }
-
-  if(attempts < 1 || attempts > 20){
-    return;
-  }
-
-  alreadySaved = true;
-
-  await addDoc(collection(db,"leaderboard"),{
-    name: player,
-    score: attempts
-  });
-
-}
-
-
-
-function loadLeaderboard(){
-
-let scores=JSON.parse(localStorage.getItem("scores")) || [];
-
-let board=document.getElementById("leaderboard");
-
-board.innerHTML="";
-
-scores.forEach(function(s){
-
-board.innerHTML+="<tr><td>"+s.name+"</td><td>"+s.score+"</td></tr>";
-
-});
-
-}
 
 
 loadLeaderboard();
