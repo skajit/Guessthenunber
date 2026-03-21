@@ -108,6 +108,49 @@ text-decoration:none;
 text-decoration:underline;
 }
 
+  .creator-box {
+  margin-top: 80px;
+  padding: 20px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,255,255,0.2);
+  animation: glowBox 2s infinite alternate;
+}
+
+.creator-box p {
+  font-size: 18px;
+  color: #00ffcc;
+  font-weight: bold;
+  text-shadow: 0 0 10px #00ffcc;
+}
+
+.creator-box a {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 15px;
+  background: #ff00ff;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.creator-box a:hover {
+  background: #cc00cc;
+  transform: scale(1.1);
+}
+
+/* Glow animation */
+@keyframes glowBox {
+  from {
+    box-shadow: 0 0 10px #00ffcc;
+  }
+  to {
+    box-shadow: 0 0 25px #00ffcc;
+  }
+                   }
 </style>
 
 </head>
@@ -165,22 +208,15 @@ text-decoration:underline;
 </tbody>
 
 </table>
-
-
-
-<div class="creator">
-
-<marquee>
-  ...⚡ THIS WEB HAS BEEN CREATED BY AJIT ⚡...</marquee>
-
-<br>
-
-INSTA :
-<a href="https://www.instagram.com/e.rehx?igsh=eDkzeXE5NmtoMGw4" target="_blank">
-FOLLOW ME HERE
-</a>
-
+  
+<div class="creator-box">
+  <p>⚪ THIS WEB MADE WITH ♥️ BY AJIT </p>
+  <a href="https://www.instagram.com/e.rehx?igsh=eDkzeXE5NmtoMGw4" target="_blank">
+    🚀 Follow on Instagram
+  </a>
 </div>
+
+
 
 
 
