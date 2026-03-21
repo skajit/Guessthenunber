@@ -315,37 +315,40 @@ window.saveScore = async function(name, score){
 }
 
 // 🔥 LOAD LEADERBOARD
-window.loadLeaderboard = async function(){
+window.loadLeaderboard = function(){
 
   const q = query(collection(db,"leaderboard"), orderBy("score"), limit(10));
-  const querySnapshot = await getDocs(q);
 
-  const board = document.getElementById("leaderboard");
-  board.innerHTML = "";
+  onSnapshot(q, (snapshot)=>{
 
-  let rank = 1;
+    const board = document.getElementById("leaderboard");
+    board.innerHTML = "";
 
-querySnapshot.forEach((doc)=>{
-  const data = doc.data();
+    let rank = 1;
 
-  let medal = "";
+    snapshot.forEach((doc)=>{
+      const data = doc.data();
 
-  if(rank === 1) medal = "🥇";
-  else if(rank === 2) medal = "🥈";
-  else if(rank === 3) medal = "🥉";
+      let medal = "";
 
-  board.innerHTML += `
-    <tr class="${rank === 1 ? 'top-player' : ''}">
-      <td>${medal} #${rank}</td>
-      <td>${data.name}</td>
-      <td>${data.score}</td>
-    </tr>
-  `;
+      if(rank === 1) medal = "🥇";
+      else if(rank === 2) medal = "🥈";
+      else if(rank === 3) medal = "🥉";
 
-  rank++;
-});
+      board.innerHTML += `
+        <tr class="${rank === 1 ? 'top-player' : ''}">
+          <td>${medal} #${rank}</td>
+          <td>${data.name}</td>
+          <td>${data.score}</td>
+        </tr>
+      `;
 
-}
+      rank++;
+    });
+
+  });
+
+  }
 
 // Load leaderboard on start
 window.onload = function(){
